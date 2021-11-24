@@ -9,11 +9,20 @@
 */
 
 
-let banco_dados = [
-  /*{"tarefa" : "Estudar JS", "status": ""},
+/*let banco_dados = [
+  {"tarefa" : "Estudar JS", "status": ""},
   {"tarefa" : "Ver série", "status": "checked"},
-  {"tarefa" : "Comer Pipoca", "status": ""}*/
-]
+  {"tarefa" : "Comer Pipoca", "status": ""}
+]*/
+
+
+
+
+const getBanco = () => JSON.parse(localStorage.getItem('todoList')) ?? [];//Se o valor do local estiver nulo, passa um array vazio
+
+
+const setBanco = (banco_dados) => localStorage.setItem('todoList', JSON.stringify(banco_dados));
+
 
 const criarItem = (tarefa, status, indice) => {
   const item = document.createElement('label'); //Criando um elemento label e armazenando na variavel "item"
@@ -36,6 +45,7 @@ const limparTarefas = () =>{
 
 const atualizarTela = () =>{
   limparTarefas();
+  const banco_dados = getBanco()
   banco_dados.forEach((item,indice) => criarItem(item.tarefa, item.status, indice)); //Percorre todos os objetos do banco chamando a função criarItem
 }
 
@@ -43,20 +53,26 @@ const inserirItem = (evento) =>{
   const tecla = evento.key //Localiza a tecla digitada e armazena.
   const texto = evento.target.value; //Localiza o texto digitado e armazena.
   if(tecla === "Enter"){
+    const banco_dados = getBanco();
     banco_dados.push({"tarefa" : texto, "status": ""})  /*Verifica se foi digitado a tecla ENTER, adiciona ao 
                                                         banco de dados a tarefa digitada com o método PUSH*/
+    setBanco(banco_dados);
     atualizarTela();
     evento.target.value = ''; //limpa os valores do input.
   }
 }
 
 const removerItem = (indice) =>{
+  const banco_dados = getBanco();
   banco_dados.splice (indice, 1) //splice = modificar uma array
+  setBanco(banco_dados);
   atualizarTela();
 }
 
 const atualizarItem = (indice) =>{
+  const banco_dados = getBanco();
   banco_dados[indice].status = banco_dados[indice].status == "" ? 'checked' : '';
+  setBanco(banco_dados);
   atualizarTela();    
 }
 
