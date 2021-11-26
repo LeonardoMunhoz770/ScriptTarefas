@@ -1,22 +1,19 @@
 'use strict';
 
-/*
-<label class="todo__item">
-  <input type="checkbox">
-  <div>teste de item 1</div>
-  <input type="button" value="X">
-  </label> 
-*/
 
 
-/*let banco_dados = [
-  {"tarefa" : "Estudar JS", "status": ""},
-  {"tarefa" : "Ver série", "status": "checked"},
-  {"tarefa" : "Comer Pipoca", "status": ""}
-]*/
+function limparBanco(){
+  localStorage.clear()
+  atualizarTela();
+}
 
+/*var data = new Date();
+var dia = String(data.getDate()).padStart(2, '0');
+var mes = String(data.getMonth() + 1).padStart(2, '0');
+var ano = data.getFullYear();
+let dataAtual = dia + '/' + mes + '/' + ano;*/
 
-
+//document.querySelector("#dataAtual").innerHTML = `${dataAtual}`;
 
 const getBanco = () => JSON.parse(localStorage.getItem('todoList')) ?? [];//Se o valor do local estiver nulo, passa um array vazio
 
@@ -89,6 +86,8 @@ const clickItem = (evento) =>{
 
 document.querySelector("#newItem").addEventListener("keypress", inserirItem);
 document.querySelector("#todo_list").addEventListener("click", clickItem);
+document.querySelector("#clear").addEventListener("click", limparBanco);
+
 
 
 atualizarTela();
